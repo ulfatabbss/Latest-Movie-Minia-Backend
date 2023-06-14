@@ -69,7 +69,6 @@ const profile = async (req, res) => {
     }
     return res.send({ status: true, data: user });
 };
-
 module.exports = {
     login,
     postUser, profile
