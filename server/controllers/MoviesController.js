@@ -4,6 +4,8 @@ const Movie = require('../models/Movies');
 const app = express();
 app.use(express.json());
 
+
+
 // Create a movie
 const addMovie = async (req, res) => {
     try {

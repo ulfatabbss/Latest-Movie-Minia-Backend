@@ -51,6 +51,9 @@ const updateUpCommingMovie = async (req, res) => {
     }
 }
 
+
+
+
 // Delete a movie by ID
 const deleteUpCommingMovie = async (req, res) => {
     try {
