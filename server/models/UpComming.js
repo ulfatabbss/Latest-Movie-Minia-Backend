@@ -53,5 +53,4 @@ const UpComming = new Schema(
         }
     });
 UpComming.plugin(passportLocalMongoose);
-
 module.exports = mongoose.model("UpComming", UpComming);

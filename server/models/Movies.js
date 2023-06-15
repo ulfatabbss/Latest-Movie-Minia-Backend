@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 // Create a movie schema
 const movieSchema = new mongoose.Schema({
     title: {
@@ -54,7 +53,6 @@ const movieSchema = new mongoose.Schema({
         type: String,
     }
 });
-
 // Create movie model
 const Movie = mongoose.model('Movie', movieSchema);
 module.exports = Movie;

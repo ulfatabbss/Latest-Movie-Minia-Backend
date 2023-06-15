@@ -5,7 +5,6 @@ const router = express.Router();
 router.post('/darama', addDrama);
 router.get('/darama', getAllDrama)
 router.get('/darama/:id', getDrama)
-router.put('/movies/:id', updateDrama)
+router.put('/darama/:id', updateDrama)
 router.delete('/darama/:id', deleteDrama)
-
 module.exports = router;

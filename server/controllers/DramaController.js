@@ -1,11 +1,7 @@
 const express = require('express');
 const Drama = require('../models/Drama');
-
 const app = express();
 app.use(express.json());
-
-
-
 // Create a movie
 const addDrama = async (req, res) => {
     try {
@@ -16,7 +12,6 @@ const addDrama = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 }
-
 // Get all movies
 const getAllDrama = async (req, res) => {
     try {
@@ -26,7 +21,6 @@ const getAllDrama = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
 // Get a movie by ID
 const getDrama = async (req, res) => {
     try {
@@ -52,7 +46,6 @@ const updateDrama = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
 // Delete a movie by ID
 const deleteDrama = async (req, res) => {
     try {
