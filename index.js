@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const connectDB = require("./server/config/db");
 const router = require("./server/routes/userRoute");
 const moviesRoutes = require('./server/routes/MoviesRoutes')
+const dramaRoutes = require('./server/routes/DramaRoutes')
+
 const port = 3000 || process.env.PORT;
 
 connectDB()
@@ -22,6 +24,8 @@ app.use((req, res, next) => {
 });
 app.use("/moveminia", router);
 app.use("/moveminia", moviesRoutes);
+app.use("/moveminia", dramaRoutes);
+
 
 
 app.listen(port, () => {

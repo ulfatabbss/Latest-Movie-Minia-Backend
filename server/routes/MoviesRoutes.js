@@ -13,7 +13,4 @@ router.get('/UpComming_movies', getAllUpCommingMovie);
 router.get('/UpComming_movies/:id', getUpCommingMovie);
 router.delete('/dell_UpComming_movies/:id', deleteUpCommingMovie);
 
-
-
-
 module.exports = router;
