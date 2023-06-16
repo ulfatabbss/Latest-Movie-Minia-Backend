@@ -6,6 +6,7 @@ const connectDB = require("./server/config/db");
 const router = require("./server/routes/userRoute");
 const moviesRoutes = require('./server/routes/MoviesRoutes')
 const dramaRoutes = require('./server/routes/DramaRoutes')
+const sliderRoutes = require('./server/routes/SliderRoutes')
 
 const port = 3000 || process.env.PORT;
 
@@ -25,6 +26,8 @@ app.use((req, res, next) => {
 app.use("/moveminia", router);
 app.use("/moveminia", moviesRoutes);
 app.use("/moveminia", dramaRoutes);
+app.use("/moveminia", sliderRoutes);
+
 
 
 
