@@ -22,14 +22,18 @@ const DramaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ep_no: {
-        type: String,
-        required: true
-    },
-    url: {
-        type: String,
-        required: true
-    },
+    episods: [
+        {
+            epi_no: {
+                type: String,
+                required: true
+            },
+            url: {
+                type: String,
+                required: true
+            },
+        }],
+
     cast: [
         {
             name: {
