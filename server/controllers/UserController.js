@@ -8,14 +8,6 @@ const postUser = async (req, res, next) => {
         if (check) {
             return res.status(400).send({ status: false, message: "Email already exists" });
         }
-
-        // if (req.body.password != req.body.confirm_password) {
-        //     return res.status(400).send({
-        //         status: false,
-        //         message: "Password and Confirm Password do not match",
-        //     });
-        // }
-
         const user = new Users(req.body);
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(req.body.password, salt);

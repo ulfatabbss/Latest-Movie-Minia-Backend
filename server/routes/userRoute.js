@@ -14,7 +14,7 @@ router.get('/logout', function (req, res) {
         res.send({ message: 'Logout succesufully', success: "true" });
     });
 });
-router.post('/newUser', postUser);
+router.post('/register', postUser);
 router.get('/getProfile/:id', profile)
 
 module.exports = router;
