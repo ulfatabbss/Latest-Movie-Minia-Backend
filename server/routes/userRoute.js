@@ -1,9 +1,6 @@
 const express = require("express");
 const { login, postUser, profile } = require("../controllers/UserController");
 const router = express.Router();
-
-//UserRegistration
-
 router.post('/login', login);
 router.get('/logout', function (req, res) {
     req.logout(function (err) {

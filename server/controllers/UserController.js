@@ -22,24 +22,16 @@ const postUser = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
+    console.log(email, password);
     try {
         const user = await Users.findOne({ email: email })
         if (!user) {
-            return res.send({ status: false, message: "User not found" });
+            return res.send({ status: false, message: "User not found...!" });
         }
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.send({ status: false, message: "Invalid email or password" });
+            return res.send({ status: false, message: "Invalid email or password...!" });
         }
-        // const payload = {
-        //     user: {
-        //         id: user._id,
-        //         email: user.email,
-        //     },
-        // };
-        // const token = middleware.getToken({ user: payload.user });
-
-        // user.token = token;
         await user.save();
         res.send({ user: user, status: true });
     } catch (err) {
