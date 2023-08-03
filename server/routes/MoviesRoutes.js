@@ -14,7 +14,7 @@ router.get('/UpComming_movies', getAllUpCommingMovie);
 router.get('/UpComming_movies/:id', getUpCommingMovie);
 router.delete('/dell_UpComming_movies/:id', deleteUpCommingMovie);
 router.post('/playlists', createPlaylist);
-router.get('/playlists', getAllPlaylists);
+router.post('/getplaylists', getAllPlaylists);
 router.get('/playlists/:id', getPlaylist);
 router.delete('/playlists/:id', deletePlaylist);
 router.delete('/playlists/:id', deletePlaylist);
