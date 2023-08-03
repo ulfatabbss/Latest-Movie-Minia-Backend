@@ -1,7 +1,8 @@
 const bcrypt = require("bcryptjs");
 const { default: mongoose } = require("mongoose");
 const Users = require("../models/Users");
-
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 const postUser = async (req, res, next) => {
     try {
         let check = await Users.findOne({ email: req.body.email });
@@ -53,7 +54,46 @@ const profile = async (req, res) => {
     }
     return res.send({ status: true, data: user });
 };
+const forgotPassword = async (req, res, next) => {
+    const { email } = req.body;
+    try {
+        const user = await Users.findOne({ email: email });
+        if (!user) {
+            return res.send({ status: false, message: "User not found...!" });
+        }
+
+        // Create a nodemailer transporter for sending emails
+        const transporter = nodemailer.createTransport({
+            service: "gmail", // e.g., Gmail, Outlook, etc.
+            auth: {
+                user: "ulfat106.webevis@gmail.com",
+                pass: "cwpgqimeekadrwva",
+            },
+        });
+
+        // Compose the email with the user's password
+        const mailOptions = {
+            from: "ulfat106.webevis@gmail.com",
+            to: "ulfat106.webevis@gmail.com",
+            subject: "Password Reminder",
+            text: `Dear ${user.name},\n\nYour password for the account is: ${user.password}\n\nPlease keep this email secure and do not share your password with anyone.\n\nIf you have any concerns, please contact our support team.\n\nBest regards,\nYour App Team`,
+        };
+
+        // Send the email
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return res.send({ status: false, message: "Failed to send the password reminder email." });
+            }
+            console.log("Email sent: " + info.response);
+            res.send({ status: true, message: "Password reminder email sent successfully." });
+        });
+    } catch (err) {
+        res.send({ message: err, status: false });
+        next(err);
+    }
+};
 module.exports = {
     login,
-    postUser, profile
+    postUser, profile, forgotPassword
 };
