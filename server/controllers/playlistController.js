@@ -101,8 +101,7 @@ const deletePlaylist = async (req, res) => {
 };
 const deleteMovieFromPlaylist = async (req, res) => {
     try {
-        const { userId, movieIdToDelete } = req.body; // Assuming the user is stored in req.user after authentication
-        const playlistId = req.params.id;
+        const { userId, movieIdToDelete, playlistId } = req.body; // Assuming the user is stored in req.user after authentication
 
         // Check if the playlist exists and belongs to the logged-in user
         const playlist = await Playlist.findOne({ _id: playlistId, user: userId });
