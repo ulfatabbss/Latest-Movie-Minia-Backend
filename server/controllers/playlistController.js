@@ -88,7 +88,7 @@ const deletePlaylist = async (req, res) => {
         const { userId } = req.user._id; // Assuming the user is stored in req.user after authentication
 
         // Check if the playlist exists and belongs to the logged-in user
-        const playlist = await Playlist.findOneAndDelete({ _id: req.params.id, user: userId }, { new: true });
+        const playlist = await Playlist.findOneAndDelete({ _id: req.params.id, user: userId });
 
         if (!playlist) {
             return res.status(404).json({ error: 'Playlist not found' });
@@ -101,10 +101,12 @@ const deletePlaylist = async (req, res) => {
 };
 const deleteMovieFromPlaylist = async (req, res) => {
     try {
-        const { userId, movieIdToDelete, playlistId } = req.body; // Assuming the user is stored in req.user after authentication
+        const { userId } = req.body; // Assuming the user is stored in req.user after authentication
+        const playlistId = req.params.id;
+        const movieIdToDelete = req.params.movieId;
 
         // Check if the playlist exists and belongs to the logged-in user
-        const playlist = await Playlist.findOne({ _id: playlistId, user: userId }).populate('movies');;
+        const playlist = await Playlist.findOne({ _id: playlistId, user: userId });
         if (!playlist) {
             return res.status(404).json({ error: 'Playlist not found' });
         }
