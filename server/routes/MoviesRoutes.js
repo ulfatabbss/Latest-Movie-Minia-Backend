@@ -17,7 +17,5 @@ router.post('/playlists', createPlaylist);
 router.post('/getplaylists', getAllPlaylists);
 router.get('/playlists/:id', getPlaylist);
 router.delete('/playlists/:id', deletePlaylist);
-router.delete('/dellplaylistmovie/:id', deleteMovieFromPlaylist);
-
-
+router.post('/dellplaylistmovie/:id', deleteMovieFromPlaylist);
 module.exports = router;
