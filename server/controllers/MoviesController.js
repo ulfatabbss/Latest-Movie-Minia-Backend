@@ -18,12 +18,15 @@ const addMovie = async (req, res) => {
 // Get all movies
 const getAllMovie = async (req, res) => {
     try {
-        const movies = await Movie.find({});
+        // Fetch all movies and sort them by _id in descending order (newest first)
+        const movies = await Movie.find({}).sort({ _id: -1 });
+
         res.json(movies);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
+
 
 // Get a movie by ID
 const getMovie = async (req, res) => {

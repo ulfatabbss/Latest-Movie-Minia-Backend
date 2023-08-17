@@ -7,9 +7,9 @@ app.use(express.json());
 // Create a movie
 const addSlider = async (req, res) => {
     try {
-        const movie = new Slider(req.body);
-        const newMovie = await movie.save();
-        res.status(201).json(newMovie);
+        const slider = new Slider(req.body);
+        const newSlider = await slider.save();
+        res.status(201).json(newSlider);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -18,8 +18,8 @@ const addSlider = async (req, res) => {
 // Get all movies
 const getSlider = async (req, res) => {
     try {
-        const movies = await Slider.find({});
-        res.json(movies);
+        const slider = await Slider.find({});
+        res.json(slider);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -28,11 +28,11 @@ const getSlider = async (req, res) => {
 // Get a movie by ID
 const getSpecificSlider = async (req, res) => {
     try {
-        const movie = await Slider.findOne({ name: req.body.name });
-        if (!movie) {
+        const slider = await Slider.findOne({ name: req.body.name });
+        if (!slider) {
             return res.status(404).json({ error: 'Slider not found' });
         }
-        res.json(movie);
+        res.json(slider);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -41,11 +41,11 @@ const getSpecificSlider = async (req, res) => {
 // Update a movie by ID
 const updateSlider = async (req, res) => {
     try {
-        const movie = await Slider.findOneAndUpdate({ name: req.body.name }, req.body, { new: true });
-        if (!movie) {
+        const slider = await Slider.findOneAndUpdate({ name: req.body.name }, req.body, { new: true });
+        if (!slider) {
             return res.status(404).json({ error: 'Slider not found' });
         }
-        res.json(movie);
+        res.json(slider);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -54,8 +54,8 @@ const updateSlider = async (req, res) => {
 // Delete a movie by ID
 const deleteSlider = async (req, res) => {
     try {
-        const movie = await Slider.findOneAndDelete({ name: req.body.name });
-        if (!movie) {
+        const slider = await Slider.findOneAndDelete({ name: req.body.name });
+        if (!slider) {
             return res.status(404).json({ error: 'Slider not found' });
         }
         res.json({ message: 'Slider deleted successfully' });
