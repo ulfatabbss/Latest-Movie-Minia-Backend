@@ -18,10 +18,6 @@ const DramaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    duration: {
-        type: String,
-        required: true
-    },
     episods: [
         {
             epi_no: {
