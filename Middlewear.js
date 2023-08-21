@@ -9,8 +9,8 @@ const config = require('./server/config/config');
 
 exports.local = passport.use(new LocalStrategy(User.authenticate()));
 passport.use(new LocalStrategy(
-    function (username, pass, done) {
-        User.findOne({ username: username })
+    function (email, pass, done) {
+        User.findOne({ email: email })
             .then((user) => {
                 console.log(user)
                 done(null, user)
