@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs");
-const { default: mongoose } = require("mongoose");
 const Users = require("../models/Users");
-const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+const config = require("../config/config");
 const postUser = async (req, res, next) => {
     try {
         let check = await Users.findOne({ email: req.body.email });
@@ -23,9 +23,8 @@ const postUser = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
-    console.log(email, password);
     try {
-        const user = await Users.findOne({ email: email })
+        const user = await Users.findOne({ email: email });
         if (!user) {
             return res.send({ status: false, message: "User not found...!" });
         }
@@ -33,14 +32,18 @@ const login = async (req, res, next) => {
         if (!isMatch) {
             return res.send({ status: false, message: "Invalid email or password...!" });
         }
-        await user.save();
-        res.send({ user: user, status: true });
+
+        // Generate JWT token
+        const token = jwt.sign({ userId: user._id, email: user.email }, config.JWT_SECRET);
+
+        // Include the token in the response
+        res.send({ user: user, status: true, token: token });
     } catch (err) {
         res.send({ message: err, status: false });
-
         next(err);
     }
 };
+
 const profile = async (req, res) => {
     const search = await req.params.id;
     const user = await Users.findOne({

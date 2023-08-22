@@ -1,93 +1,61 @@
-var passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('./server/models/Users');
-const jwtStrategy = require('passport-jwt').Strategy;
-const Extractjwt = require('passport-jwt').ExtractJwt;
-const jwt = require('jsonwebtoken');
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+const Users = require("./server/models/Users"); // Update the path if needed
 const config = require('./server/config/config');
 
-
-exports.local = passport.use(new LocalStrategy(User.authenticate()));
-passport.use(new LocalStrategy(
-    function (email, pass, done) {
-        User.findOne({ email: email })
-            .then((user) => {
-                console.log(user)
-                done(null, user)
-            })
-            .catch(err => {
-                done(err, null)
-            })
-    }
-));
-
-passport.serializeUser(function (user, done) {
-    // console.log('FIRST ID', user.id);
-    done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-    User.findById(id)
-        .then(function (user) {
-            done(null, user);
-        })
-        .catch(function (err) {
-            done(err);
-        });
-});
-exports.getToken = (user) => {
-    return jwt.sign(user, config.JWT_SECRET, { expiresIn: 3600 });
+const localStrategyOptions = {
+    usernameField: "email",
+    passwordField: "password",
 };
-exports.checkLogin = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        next()
-    }
-    else {
-        res.send({ message: "Already Logout." });
-        next()
-    }
 
-}
-exports.isLocalAuthenticated =
-    function (req, res, next) {
-        // console.log(req,"is local authenticated");
-        passport.authenticate('local', function (err, user, info, done) {
-            if (err) { return next(err); }
+passport.use(
+    new LocalStrategy(localStrategyOptions, async (email, password, done) => {
+        try {
+            const user = await Users.findOne({ email });
             if (!user) {
-                next(new Error("User Doesn't Exist"))
+                return done(null, false, { message: "User not found" });
             }
-            next()
-        })(req, res, next);
-    }
-exports.isAdmin = (req, res, next) => {
-    // console.log("user", req)
-    try {
-        User.findOne({ _id: req.user })
-            .populate("role")
-            .populate({
-                path: "role",
-                populate: {
-                    path: "permissions",
-                    model: "Permissions"
-                }
-            })
-            .then((user) => {
-                // console.log("user middlewear", user?.role?.title );
-                if (user?.role?.title == "Admin") {
-                    next();
-                } else {
-                    res.send('You are not authorized to perform this operation!');
-                }
-            }, (err) => {
-                next(err)
-            })
-            .catch((err) => {
-                res.send('You are not authorized to perform this operation!');
-            });
-    }
-    catch (err) {
-        console.log("user error")
-        res.send('You are not authorized to perform this operation!');
 
-    }
+            const isMatch = await user.comparePassword(password); // Define this method in your Users model
+            if (!isMatch) {
+                return done(null, false, { message: "Invalid email or password" });
+            }
+
+            return done(null, user);
+        } catch (error) {
+            return done(error);
+        }
+    })
+);
+
+const jwtStrategyOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: config.JWT_SECRET, // Replace with your actual secret key
 };
+
+passport.use(
+    new JwtStrategy(jwtStrategyOptions, async (payload, done) => {
+        try {
+            const user = await Users.findById(payload.userId);
+            if (!user) {
+                return done(null, false);
+            }
+            return done(null, user);
+        } catch (error) {
+            return done(error, false);
+        }
+    })
+);
+passport.checkRole = function (role) {
+    return function (req, res, next) {
+        if (req.user && req.user.role === role) {
+            return next();
+        } else {
+            return res.status(403).json({ message: "Access denied" });
+        }
+    };
+};
+
+module.exports = passport;

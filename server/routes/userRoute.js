@@ -13,7 +13,5 @@ router.get('/logout', function (req, res) {
 });
 router.post('/register', postUser);
 router.post('/forgotpassword', forgotPassword);
-
 router.get('/getProfile/:id', profile)
-
 module.exports = router;
