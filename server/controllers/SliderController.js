@@ -3,7 +3,6 @@ const Slider = require('../models/Slider');
 
 const app = express();
 app.use(express.json());
-
 // Create a movie
 const addSlider = async (req, res) => {
     try {
@@ -14,7 +13,6 @@ const addSlider = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 }
-
 // Get all movies
 const getSlider = async (req, res) => {
     try {
@@ -24,7 +22,6 @@ const getSlider = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
 // Get a movie by ID
 const getSpecificSlider = async (req, res) => {
     try {
@@ -37,7 +34,6 @@ const getSpecificSlider = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
 // Update a movie by ID
 const updateSlider = async (req, res) => {
     try {
@@ -50,7 +46,6 @@ const updateSlider = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
 // Delete a movie by ID
 const deleteSlider = async (req, res) => {
     try {

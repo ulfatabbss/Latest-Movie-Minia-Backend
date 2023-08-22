@@ -1,11 +1,11 @@
 const express = require("express");
 const { addDrama, getAllDrama, getDrama, updateDrama, deleteDrama } = require("../controllers/DramaController");
 const router = express.Router();
-const passport = require("../../Middlewear");
+const authMiddleware = require("../../authMiddleware");
 //UserRegistration
-router.post('/darama', passport.authenticate("jwt", { session: false }), passport.checkRole("Admin"), addDrama);
+router.post('/darama', authMiddleware.authenticateToken, addDrama);
 router.get('/darama', getAllDrama)
 router.get('/darama/:id', getDrama)
-router.put('/darama/:id', passport.authenticate("jwt", { session: false }), passport.checkRole("Admin"), updateDrama)
-router.delete('/darama/:id', passport.authenticate("jwt", { session: false }), passport.checkRole("Admin"), deleteDrama)
+router.put('/darama/:id', authMiddleware.authenticateToken, updateDrama)
+router.delete('/darama/:id', authMiddleware.authenticateToken, deleteDrama)
 module.exports = router;

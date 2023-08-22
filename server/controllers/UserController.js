@@ -3,6 +3,7 @@ const Users = require("../models/Users");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
+
 const postUser = async (req, res, next) => {
     try {
         let check = await Users.findOne({ email: req.body.email });
@@ -34,8 +35,11 @@ const login = async (req, res, next) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user._id, email: user.email }, config.JWT_SECRET);
-
+        const token = jwt.sign(
+            { userId: user._id, email: user.email, role: user.role }, // Include role in the payload
+            config.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
         // Include the token in the response
         res.send({ user: user, status: true, token: token });
     } catch (err) {

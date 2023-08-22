@@ -2,19 +2,17 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const cors = require("cors")
+const cors = require("cors");
 const connectDB = require("./server/config/db");
 const router = require("./server/routes/userRoute");
 const moviesRoutes = require('./server/routes/MoviesRoutes')
 const dramaRoutes = require('./server/routes/DramaRoutes')
 const sliderRoutes = require('./server/routes/SliderRoutes')
 const port = 3000 || process.env.PORT;
-const passport = require("./Middlewear");
 connectDB()
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(passport.initialize());
 app.use(express.json());
 app.use((req, res, next) => {
     next();

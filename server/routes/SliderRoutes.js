@@ -1,11 +1,10 @@
 const express = require("express");
 const { addSlider, getSpecificSlider, getSlider, updateSlider, deleteSlider } = require("../controllers/SliderController");
-const passport = require('../../Middlewear');
+const authMiddleware = require("../../authMiddleware");
 const router = express.Router();
-//UserRegistration
-router.post('/slider', passport.authenticate("jwt", { session: false }), passport.checkRole("Admin"), addSlider);
+router.post('/slider', authMiddleware.authenticateToken, addSlider);
 router.get('/oneslider', getSpecificSlider)
 router.get('/slider', getSlider)
-router.put('/slider', passport.authenticate("jwt", { session: false }), passport.checkRole("Admin"), updateSlider)
-router.delete('/slider', passport.authenticate("jwt", { session: false }), passport.checkRole("Admin"), deleteSlider)
+router.put('/slider', authMiddleware.authenticateToken, updateSlider)
+router.delete('/slider', authMiddleware.authenticateToken, deleteSlider)
 module.exports = router;
