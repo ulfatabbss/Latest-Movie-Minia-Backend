@@ -53,6 +53,6 @@ const movieSchema = new mongoose.Schema({
         type: String,
     }
 });
-// Create movie model
+
 const Movie = mongoose.model('Movie', movieSchema);
 module.exports = Movie;

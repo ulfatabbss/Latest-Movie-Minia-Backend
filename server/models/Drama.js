@@ -58,6 +58,5 @@ const DramaSchema = new mongoose.Schema({
         type: String,
     }
 });
-// Create movie model
 const Drama = mongoose.model('Drama', DramaSchema);
 module.exports = Drama;
