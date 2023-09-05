@@ -14,8 +14,6 @@ const addMovie = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 }
-
-// Get all movies
 const getAllMovie = async (req, res) => {
     try {
         // Fetch all movies and sort them by _id in descending order (newest first)
@@ -26,7 +24,31 @@ const getAllMovie = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+// Get all movies with paging
+// const getAllMovie = async (req, res) => {
+//     const page = parseInt(req.query.page) || 1;
+//     const pageSize = parseInt(req.query.pageSize) || 10;
 
+//     try {
+//         const totalMovies = await Movie.countDocuments();
+//         const movies = await Movie.find({})
+//             .sort({ _id: -1 })
+//             .skip((page - 1) * pageSize)
+//             .limit(pageSize);
+
+//         const totalPages = Math.ceil(totalMovies / pageSize);
+
+//         res.json({
+//             movies,
+//             page,
+//             pageSize,
+//             totalMovies,
+//             totalPages,
+//         });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// }
 
 // Get a movie by ID
 const getMovie = async (req, res) => {
@@ -66,7 +88,11 @@ const deleteMovie = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
 module.exports = {
     addMovie,
-    getAllMovie, getMovie, deleteMovie, updateMovie
+    getAllMovie,
+    getMovie,
+    deleteMovie,
+    updateMovie
 };

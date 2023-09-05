@@ -4,7 +4,7 @@ const UpComming = require('../models/UpComming');
 const app = express();
 app.use(express.json());
 
-// Create a movie
+// Create an upcoming movie
 const addUpCommingMovie = async (req, res) => {
     try {
         const movie = new UpComming(req.body);
@@ -15,7 +15,6 @@ const addUpCommingMovie = async (req, res) => {
     }
 }
 
-// Get all movies
 const getAllUpCommingMovie = async (req, res) => {
     try {
         const movies = await UpComming.find({});
@@ -24,8 +23,30 @@ const getAllUpCommingMovie = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+// Get all upcoming movies with paging
+// const getAllUpCommingMovie = async (req, res) => {
+//     const page = parseInt(req.query.page) || 1;
+//     const pageSize = parseInt(req.query.pageSize) || 10;
 
-// Get a movie by ID
+//     try {
+//         const totalMovies = await UpComming.countDocuments();
+//         const movies = await UpComming.find({})
+//             .skip((page - 1) * pageSize)
+//             .limit(pageSize);
+//         const totalPages = Math.ceil(totalMovies / pageSize);
+//         res.json({
+//             movies,
+//             page,
+//             pageSize,
+//             totalMovies,
+//             totalPages,
+//         });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// }
+
+// Get an upcoming movie by ID
 const getUpCommingMovie = async (req, res) => {
     try {
         const movie = await UpComming.findById(req.params.id);
@@ -38,7 +59,7 @@ const getUpCommingMovie = async (req, res) => {
     }
 }
 
-// Update a movie by ID
+// Update an upcoming movie by ID
 const updateUpCommingMovie = async (req, res) => {
     try {
         const movie = await UpComming.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -51,10 +72,7 @@ const updateUpCommingMovie = async (req, res) => {
     }
 }
 
-
-
-
-// Delete a movie by ID
+// Delete an upcoming movie by ID
 const deleteUpCommingMovie = async (req, res) => {
     try {
         const movie = await UpComming.findByIdAndDelete(req.params.id);
@@ -66,6 +84,11 @@ const deleteUpCommingMovie = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
 module.exports = {
-    addUpCommingMovie, getUpCommingMovie, getAllUpCommingMovie, deleteUpCommingMovie, updateUpCommingMovie
+    addUpCommingMovie,
+    getUpCommingMovie,
+    getAllUpCommingMovie,
+    deleteUpCommingMovie,
+    updateUpCommingMovie
 };

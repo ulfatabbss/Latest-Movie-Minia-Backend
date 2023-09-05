@@ -12,7 +12,7 @@ const addDrama = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 }
-// Get all movies
+
 const getAllDrama = async (req, res) => {
     try {
         const movies = await Drama.find({});
@@ -21,6 +21,31 @@ const getAllDrama = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+// Get all movies
+// const getAllDrama = async (req, res) => {
+//     const page = parseInt(req.query.page) || 1;
+//     const pageSize = parseInt(req.query.pageSize) || 10;
+
+//     try {
+//         const totalDramas = await Drama.countDocuments();
+//         const dramas = await Drama.find({})
+//             .skip((page - 1) * pageSize)
+//             .limit(pageSize);
+
+//         const totalPages = Math.ceil(totalDramas / pageSize);
+
+//         res.json({
+//             dramas,
+//             page,
+//             pageSize,
+//             totalDramas,
+//             totalPages,
+//         });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
 // Get a movie by ID
 const getDrama = async (req, res) => {
     try {

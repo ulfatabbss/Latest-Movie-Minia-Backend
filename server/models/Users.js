@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const passportLocalMongoose = require("passport-local-mongoose");
+
 
 const Schema = mongoose.Schema;
 const UsersSchema = new Schema(
@@ -22,7 +22,16 @@ const UsersSchema = new Schema(
             enum: ["user", "Admin"], // Possible roles
             default: "user", // Default role
         },
+        otp: {
+            type: String,
+        },
+        otpExpiration: {
+            type: String,
+        },
+        profilePicture: {
+            type: String, // You can use String to store the image URL or path
+            default: "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg?size=626&ext=jpg&uid=R28842868&ga=GA1.2.332396238.1691144532&semt=ais"
+        },
     });
-UsersSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", UsersSchema);

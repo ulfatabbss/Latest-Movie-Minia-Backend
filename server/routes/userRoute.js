@@ -1,6 +1,8 @@
 const express = require("express");
-const { login, postUser, profile, forgotPassword } = require("../controllers/UserController");
+
+const { login, profile, forgotPassword, sendOTP, updatePassword, Register, editProfile } = require("../controllers/UserController");
 const router = express.Router();
+const upload = require("../middlewear/multer");
 router.post('/login', login);
 router.get('/logout', function (req, res) {
     req.logout(function (err) {
@@ -11,7 +13,13 @@ router.get('/logout', function (req, res) {
         res.send({ message: 'Logout succesufully', success: "true" });
     });
 });
-router.post('/register', postUser);
+router.post('/register', upload.single('profilePicture'), Register);
 router.post('/forgotpassword', forgotPassword);
 router.get('/getProfile/:id', profile)
+router.post('/sendOtp', sendOTP)
+router.post('/updatePassword', updatePassword)
+router.post('/editProfile/:userId', upload.single('profilePicture'), editProfile)
+
+
+
 module.exports = router;
