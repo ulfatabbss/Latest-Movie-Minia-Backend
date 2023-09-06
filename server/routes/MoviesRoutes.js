@@ -14,8 +14,8 @@ router.post('/UpComming_movies', authMiddleware.authenticateToken, addUpCommingM
 router.get('/UpComming_movies', getAllUpCommingMovie);
 router.get('/UpComming_movies/:id', getUpCommingMovie);
 router.delete('/dell_UpComming_movies/:id', authMiddleware.authenticateToken, deleteUpCommingMovie);
-router.post('/playlists', authMiddleware.authenticateToken, createPlaylist);
-router.post('/getplaylists', authMiddleware.authenticateToken, getAllPlaylists);
+router.post('/playlists', createPlaylist);
+router.post('/getplaylists', getAllPlaylists);
 router.get('/playlists/:id', getPlaylist);
 router.delete('/playlists/:id', authMiddleware.authenticateToken, deletePlaylist);
 router.delete('/playlists/:id/movies/:movieId', authMiddleware.authenticateToken, deleteMovieFromPlaylist);
