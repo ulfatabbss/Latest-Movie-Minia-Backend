@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { login, profile, forgotPassword, sendOTP, updatePassword, Register, editProfile } = require("../controllers/UserController");
+const { login, profile, forgotPassword, sendOTP, updatePassword, Register, editProfile, deleteAccount } = require("../controllers/UserController");
 const router = express.Router();
 const upload = require("../middlewear/multer");
 router.post('/login', login);
@@ -19,7 +19,7 @@ router.get('/getProfile/:id', profile)
 router.post('/sendOtp', sendOTP)
 router.post('/updatePassword', updatePassword)
 router.post('/editProfile/:userId', upload.single('profilePicture'), editProfile)
-
+router.post('/deleteAccount/:id', deleteAccount)
 
 
 module.exports = router;

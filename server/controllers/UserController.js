@@ -175,7 +175,7 @@ const sendOTP = async (req, res, next) => {
         user.otp = otp;
         user.otpExpiration = otpExpiration;
         await user.save();
-        console.log(user, "new oneeeeee");
+        // console.log(user, "new oneeeeee");
         // Send the OTP to the user's email
         const transporter = nodemailer.createTransport({
             service: "Gmail", // e.g., Gmail, Outlook, etc.
@@ -238,11 +238,32 @@ const editProfile = async (req, res, next) => {
     }
 };
 
+const deleteAccount = async (req, res) => {
+    try {
+        // Extract the user's ID from the request parameters or request body
+        const { id } = req.params; // Assuming the user ID is in the route parameters
+
+        // Use Mongoose to find the user by ID and remove it
+        const deletedUser = await Users.findByIdAndRemove(id);
+
+        if (!deletedUser) {
+            return res.send({ status: false, message: "User not found or already deleted." });
+        }
+
+        // Send a success response
+        res.send({ status: true, message: "User deleted successfully." });
+    } catch (err) {
+        // Handle errors and send an error response
+        console.error("Error in deleteAccount:", err);
+        res.status(500).send({ status: false, message: "An error occurred while deleting the user." });
+    }
+};
+
 module.exports = {
     login,
     Register,
     profile,
     forgotPassword,
     sendOTP,
-    updatePassword, editProfile
+    updatePassword, editProfile, deleteAccount
 };

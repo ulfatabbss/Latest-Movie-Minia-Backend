@@ -17,8 +17,8 @@ router.delete('/dell_UpComming_movies/:id', authMiddleware.authenticateToken, de
 router.post('/playlists', createPlaylist);
 router.post('/getplaylists', getAllPlaylists);
 router.get('/playlists/:id', getPlaylist);
-router.delete('/playlists/:id', authMiddleware.authenticateToken, deletePlaylist);
-router.delete('/playlists/:id/movies/:movieId', authMiddleware.authenticateToken, deleteMovieFromPlaylist);
+router.delete('/playlists/:id', deletePlaylist);
+router.delete('/playlists/:id/movies/:movieId', deleteMovieFromPlaylist);
 router.post("/playlist/checkRegister", upload.any(), (req, res, next) => {
     console.log(req.body)
     res.send(req.body)
